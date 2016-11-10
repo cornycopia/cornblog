@@ -1,0 +1,10 @@
+{% if latest_entry_list %}
+    <h1>Enzo's blog</h1>
+    <ul>
+    {% for entry in latest_entry_list %}
+    <li><a href="{% url 'blog:entry' entry.id %}">{{ entry.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No entries are available.</p>
+{% endif %}
