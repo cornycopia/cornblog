@@ -2,7 +2,7 @@
     <h1>Enzo's blog</h1>
     <ul>
     {% for entry in latest_entry_list %}
-    <li><a href="{% url 'blog:entry' entry.id %}">{{ entry.title }}</a></li>
+    <li><a href="{% url 'blog:entry' entry.id %}">{{ entry.score }} : {{ entry.title }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

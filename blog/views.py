@@ -13,13 +13,32 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published blog entries."""
-        return Entry.objects.order_by('-pub_date')[:5]
+        return Entry.objects.order_by('-score')[:5]
+
+def upvote(request, entry_id):
+    entry = get_object_or_404(Entry, pk=entry_id)
+    entry.score += 1
+    entry.save()
+    return render(request, 'blog/upvote.html', {'entry' : entry})
+
+def downvote(request, entry_id):
+    entry = get_object_or_404(Entry, pk=entry_id)
+    entry.score -= 1
+    entry.save()
+    return render(request, 'blog/downvote.html', {'entry' : entry})
+
 """
-    def upvote(self, request, entry_id):
-        entry = get_object_or_404(Entry, pk=entry_id)
-        entry.score = entry.score + 1
-        entry.save()
-        return HttpResponseRedirect(reverse('blog:entry', args=(entry.id,)))
+def comm_upvote(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    comment.score += 1
+    comment.save()
+    return render(request, 'blog/comment_upvote.html', {'comment' : comment})
+
+def comm_downvote(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    comment.score -= 1
+    comment.save()
+    return render(request, 'blog/comment_downvote.html', {'comment' : comment})
 """
 
 def entry(request, entry_id):
