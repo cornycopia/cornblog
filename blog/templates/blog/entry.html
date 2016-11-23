@@ -1,24 +1,37 @@
-<a href="{% url 'blog:upvote' entry.id %}">&#8679;</a>
-<h1>{{ entry.score }} {{ entry.title }}</h1>
-<a href="{% url 'blog:downvote' entry.id %}">&#8681;</a>
+<form action="{% url 'blog:entry' entry.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit" name="action" value="upvote">&#8679;</button>
+    <h1>{{ entry.score }} {{ entry.title }}</h1>
+    <button type="submit" name="action" value="downvote">&#8681;</button>
+</form>
 <br>
 <br>
 <p>
-<h4>{{ entry.pub_date }}</h4>
-{{ entry.entry_text }}
+    <h4>{{ entry.pub_date }}</h4>
+    {{ entry.entry_text }}
 </p>
-<br>
-<br>
-<br>
-<a href="{% url 'blog:post_comment' entry.id %}">Post a comment</a>
-<br>
-<br>
 <br>
 <h2>Comments</h2>
 {% for comment in entry.comment_set.all %}
     <name="comment" id="comment{{ forloop.counter }}" value=" {{ comment.id }}" />
-    <label for="comment{{ forloop.counter }}">{{ comment.score }}  {{comment.commenter }} : {{ comment.comment_text }}</label><br>
+    <label for="comment{{ forloop.counter }}"><br>{{ comment.pub_time }}<br>{{comment.commenter }} : {{ comment.comment_text }}</label><br>
 {% endfor %}
+<br>
+<br>
+
+<h4>Post a Comment</h4>
+<form action="{% url 'blog:entry' entry.id %}" method="post">
+    {% csrf_token %}
+    {{ form.commenter.label }}:
+    {{ form.commenter }}
+    <br>
+    <br>
+    {{ form.comment.label }}:
+    {{ form.comment }}
+    <br>
+    <br>
+    <input type="submit" name="action" value="Submit" />
+</form>
 <br>
 <br>
 <h2><a href="{% url 'blog:index' %}">Home</a></h2>
