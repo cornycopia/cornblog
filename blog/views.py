@@ -33,6 +33,6 @@ def entry(request, entry_id):
                 i_commenter = form.cleaned_data['commenter']
                 i_comment_text = form.cleaned_data['comment']
                 entry.save()
-                entry.comment_set.create(pub_time=timezone.now(), commenter=i_commenter, comment_text=i_comment_text)
+                entry.comment_set.create(pub_date=timezone.now(), commenter=i_commenter, comment_text=i_comment_text)
         return HttpResponseRedirect(reverse('blog:entry', args=(entry.id,)))
     return render(request, 'blog/entry.html', {'entry' : entry, 'form' : form})

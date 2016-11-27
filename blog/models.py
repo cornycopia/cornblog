@@ -14,7 +14,7 @@ class Entry(models.Model):
 
 class Comment(models.Model):
     entry = models.ForeignKey(Entry, on_delete=models.CASCADE)
-    pub_time = models.DateTimeField('Time of Publication')
+    pub_date = models.DateTimeField('Time of Publication')
     commenter = models.CharField('Commenter',max_length=100)
     comment_text = models.TextField('Comment')
     score = models.IntegerField(default=0)

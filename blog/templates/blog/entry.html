@@ -1,37 +1,43 @@
-<form action="{% url 'blog:entry' entry.id %}" method="post">
-    {% csrf_token %}
-    <button type="submit" name="action" value="upvote">&#8679;</button>
-    <h1>{{ entry.score }} {{ entry.title }}</h1>
-    <button type="submit" name="action" value="downvote">&#8681;</button>
-</form>
-<br>
-<br>
-<p>
-    <h4>{{ entry.pub_date }}</h4>
-    {{ entry.entry_text }}
-</p>
-<br>
-<h2>Comments</h2>
-{% for comment in entry.comment_set.all %}
-    <name="comment" id="comment{{ forloop.counter }}" value=" {{ comment.id }}" />
-    <label for="comment{{ forloop.counter }}"><br>{{ comment.pub_time }}<br>{{comment.commenter }} : {{ comment.comment_text }}</label><br>
-{% endfor %}
-<br>
-<br>
-
-<h4>Post a Comment</h4>
-<form action="{% url 'blog:entry' entry.id %}" method="post">
-    {% csrf_token %}
-    {{ form.commenter.label }}:
-    {{ form.commenter }}
-    <br>
-    <br>
-    {{ form.comment.label }}:
-    {{ form.comment }}
-    <br>
-    <br>
-    <input type="submit" name="action" value="Submit" />
-</form>
-<br>
-<br>
-<h2><a href="{% url 'blog:index' %}">Home</a></h2>
+<!DOCTYPE html>
+<html lang="en">
+    <header>
+        <form action="{% url 'blog:entry' entry.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" name="action" value="upvote">&#8679;</button>
+            <h1>{{ entry.score }} {{ entry.title }}</h1>
+            <button type="submit" name="action" value="downvote">&#8681;</button>
+        </form>
+        <br>
+        <br>
+        <p>
+            <h4>{{ entry.pub_date }}</h4>
+            {{ entry.entry_text }}
+        </p>
+    </header>
+    <body>
+        <h2>Comments</h2>
+        {% for comment in entry.comment_set.all %}
+            <name="comment" id="comment{{ forloop.counter }}" value=" {{ comment.id }}" />
+            <label for="comment{{ forloop.counter }}"><br>{{ comment.pub_time }}<br>{{comment.commenter }} : {{ comment.comment_text }}</label><br>
+        {% endfor %}
+        <br>
+        <br>
+        
+        <h4>Post a Comment</h4>
+        <form action="{% url 'blog:entry' entry.id %}" method="post">
+            {% csrf_token %}
+            {{ form.commenter.label }}:
+            {{ form.commenter }}
+            <br>
+            <br>
+            {{ form.comment.label }}:
+            {{ form.comment }}
+            <br>
+            <br>
+            <input type="submit" name="action" value="Submit" />
+        </form>
+        <br>
+        <br>
+        <h2><a href="{% url 'blog:index' %}">Home</a></h2>
+    </body>
+</html>
